@@ -175,6 +175,7 @@ class KrogocoIcs:
 
         h3s = soup.find_all("h3")
         events: list[CalendarEvent] = []
+        seen: set[tuple[date, str, str]] = set()
 
         today = date.today()
         horizon = _last_day_of_month(today, self.months)
@@ -218,6 +219,12 @@ class KrogocoIcs:
                 url = a["href"]
                 if url.startswith("/"):
                     url = urljoin(self.BASE_URL, url)
+
+                # Skip duplicate events (same date, title and URL)
+                key = (current_date, title, url)
+                if key in seen:
+                    continue
+                seen.add(key)
 
                 start_t, end_t, all_day = _parse_time_range(title)
 

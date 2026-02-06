@@ -190,3 +190,29 @@ def test_blacklist_sports_keywords():
     assert "Studentfest" in titles
 
     assert len(events) == 6
+
+
+# --- Duplicate tests ---
+
+DUPLICATE_HTML = (FIXTURES / "calendar_duplicates.html").read_text(encoding="utf-8")
+
+
+def test_duplicate_events_are_removed():
+    """Duplicate events in the source HTML should be deduplicated."""
+    scraper = KrogocoIcs(
+        url="https://krogoco.se/jonkoping/kalender/",
+        months=2,
+    )
+    with (
+        patch.object(scraper, "_fetch_html", return_value=DUPLICATE_HTML),
+        patch("krog_company_ics.krogoco_ics.date") as mock_date,
+    ):
+        mock_date.today.return_value = FAKE_TODAY
+        mock_date.side_effect = lambda *args, **kw: date(*args, **kw)
+        events = scraper.scrape_events()
+
+    assert len(events) == 2
+    assert events[0].title == "Räkfrossa"
+    assert events[0].date == date(2025, 2, 28)
+    assert events[1].title == "AW Med Quiz! Från Kl.17.00"
+    assert events[1].date == date(2025, 3, 6)

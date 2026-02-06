@@ -1,6 +1,6 @@
-# krog-company-ics
+# krogoco-ics
 
-A Python library that scrapes [Krog & Co](https://krogoco.se/) calendar pages
+A Python library that scrapes [Krog&Co](https://krogoco.se/) calendar pages
 and converts them to iCalendar (ICS) files.
 
 ## Installation

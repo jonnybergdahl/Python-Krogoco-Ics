@@ -5,13 +5,11 @@ and converts them to iCalendar (ICS) files.
 
 ## Installation
 
-```bash
-pip install .
-```
-
-For development (includes pytest):
+Clone the repository and install locally:
 
 ```bash
+git clone https://github.com/jonnybergdahl/Python-Krogoco-Ics.git
+cd Python-Krogoco-Ics
 pip install -e ".[dev]"
 ```
 

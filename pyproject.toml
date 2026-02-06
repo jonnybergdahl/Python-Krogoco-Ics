@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "krog_company_ics"
+version = "0.1.0"
+description = "A Python library that screen scrapes Krog&Co's calendar page to create an ICS file."
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+dependencies = [
+    "beautifulsoup4",
+    "icalendar",
+    "requests",
+]
+authors = [
+    {name = "Jonny Bergdahl"},
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "responses",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
